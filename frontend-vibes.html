@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Frontend Vibes — Vibe Code Academy</title>
+  <meta name="description" content="Kuasai React, Vue, dan CSS moden untuk membina antara muka pengguna yang menakjubkan." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+
+  <a href="../index.html#main-content" class="skip-link">Langkau ke kandungan utama</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="../index.html" class="logo" aria-label="Vibe Code Academy – kembali ke halaman utama">
+        VIBE<span class="logo-accent">CODE</span> ACADEMY
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="../index.html#about" class="nav-link">Tentang</a></li>
+          <li><a href="../index.html#courses" class="nav-link">Kursus</a></li>
+          <li><a href="../index.html#faq" class="nav-link">Soalan Lazim</a></li>
+          <li><a href="../index.html#contact" class="nav-link">Hubungi</a></li>
+        </ul>
+        <a href="../apply.html" class="btn btn-nav">Mohon Sekarang</a>
+      </nav>
+      <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Togol menu navigasi">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="course-hero" aria-labelledby="course-title">
+      <div class="container">
+        <a href="../index.html#courses" class="back-link">&larr; Kembali ke Kursus</a>
+        <h1 id="course-title">Frontend <span class="text-gradient">Vibes</span></h1>
+        <p class="hero-subtitle">Kuasai React, Vue, dan CSS moden untuk membina antara muka pengguna yang menakjubkan.</p>
+        <div class="course-meta">
+          <span>&#9200; 12 minggu</span>
+          <span>&#128218; Tahap: Pertengahan</span>
+          <span>&#127891; Sijil: Ya</span>
+        </div>
+        <a href="../apply.html" class="btn btn-primary">Daftar Sekarang</a>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="learn-heading">
+      <div class="container">
+        <h2 id="learn-heading" class="section-title">Apa Yang Anda Akan Pelajari</h2>
+        <div class="learn-grid">
+          <div class="learn-item">
+            <h3>React &amp; Ecosystem</h3>
+            <p>Komponen, state management, hooks, dan routing dalam React 19.</p>
+          </div>
+          <div class="learn-item">
+            <h3>Vue 3</h3>
+            <p>Composition API, Pinia, Vue Router, dan pola reka bentuk komponen.</p>
+          </div>
+          <div class="learn-item">
+            <h3>CSS Modern</h3>
+            <p>CSS Grid, Flexbox, Custom Properties, animations, dan responsive design.</p>
+          </div>
+          <div class="learn-item">
+            <h3>TypeScript</h3>
+            <p>Type safety, generics, utility types, dan integrasi dengan framework.</p>
+          </div>
+          <div class="learn-item">
+            <h3>Performance</h3>
+            <p>Lazy loading, code splitting, bundle optimization, dan Core Web Vitals.</p>
+          </div>
+          <div class="learn-item">
+            <h3>Testing</h3>
+            <p>Unit test, integration test, dan E2E testing dengan Vitest &amp; Playwright.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-dark" aria-labelledby="curriculum-heading">
+      <div class="container">
+        <h2 id="curriculum-heading" class="section-title">Kurikulum</h2>
+        <div class="curriculum-list">
+          <div class="curriculum-item">
+            <div><span class="module">Modul 1</span> — Asas Frontend &amp; Alatan</div>
+            <span class="duration">1 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 2</span> — HTML &amp; CSS Mendalam</div>
+            <span class="duration">2 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 3</span> — JavaScript Lanjutan</div>
+            <span class="duration">2 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 4</span> — React: Komponen &amp; State</div>
+            <span class="duration">2 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 5</span> — Vue 3 &amp; Composition API</div>
+            <span class="duration">2 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 6</span> — TypeScript untuk Frontend</div>
+            <span class="duration">1 minggu</span>
+          </div>
+          <div class="curriculum-item">
+            <div><span class="module">Modul 7</span> — Projek Akhir</div>
+            <span class="duration">2 minggu</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section cta-section" aria-labelledby="cta-heading">
+      <div class="container">
+        <h2 id="cta-heading">Sedia Untuk Menguasai Frontend?</h2>
+        <p>Sertai Frontend Vibes dan mula bina antara muka yang menakjubkan hari ini.</p>
+        <a href="../apply.html" class="btn btn-primary">Mohon Sekarang</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 Vibe Code Academy. Dibina dengan &#9749; dan vibe yang baik.</p>
+    </div>
+  </footer>
+
+  <script src="../script.js"></script>
+</body>
+</html>
