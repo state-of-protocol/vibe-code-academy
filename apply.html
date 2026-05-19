@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pendaftaran — Vibe Code Academy</title>
+  <meta name="description" content="Daftar sebagai pelajar Vibe Code Academy. Isi borang permohonan untuk memulakan perjalanan coding anda." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .apply-hero {
+      min-height: 40vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      text-align: center;
+    }
+
+    .apply-hero h1 {
+      font-size: var(--font-size-3xl);
+      margin-bottom: var(--space-5);
+    }
+
+    .apply-hero p {
+      max-width: 600px;
+      margin: 0 auto;
+      opacity: 0.8;
+      font-size: var(--font-size-lg);
+    }
+
+    .apply-form-section {
+      padding: var(--space-7) 0 var(--space-8);
+    }
+
+    .apply-form {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-5);
+    }
+
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .form-group label {
+      display: block;
+      font-size: var(--font-size-sm);
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .form-group label .required {
+      color: var(--color-surface-muted);
+      margin-left: 2px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      background: var(--glass-bg);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-stack);
+      font-size: var(--font-size-lg);
+      box-shadow: var(--shadow-neo-sm);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+
+    .form-group input:hover,
+    .form-group textarea:hover,
+    .form-group select:hover {
+      border-color: var(--color-text-primary);
+    }
+
+    .form-group input:focus-visible,
+    .form-group textarea:focus-visible,
+    .form-group select:focus-visible {
+      outline: 2px solid var(--color-surface-muted);
+      outline-offset: 0px;
+      border-color: transparent;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1), var(--shadow-neo-sm);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #666;
+    }
+
+    .form-group .hint {
+      display: block;
+      font-size: var(--font-size-xs);
+      opacity: 0.5;
+      margin-top: var(--space-1);
+    }
+
+    .form-group.has-error input,
+    .form-group.has-error textarea,
+    .form-group.has-error select {
+      border-color: var(--color-surface-muted);
+    }
+
+    .form-group .error-message {
+      color: var(--color-surface-muted);
+      font-size: var(--font-size-sm);
+      margin-top: var(--space-1);
+      display: none;
+    }
+
+    .form-group.has-error .error-message {
+      display: block;
+    }
+
+    .form-divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: var(--space-7) 0;
+    }
+
+    .form-section-title {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-5);
+      color: var(--color-text-primary);
+    }
+
+    .form-actions {
+      display: flex;
+      gap: var(--space-5);
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      margin-top: var(--space-7);
+      padding-top: var(--space-7);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .form-actions .btn {
+      padding: var(--space-4) var(--space-7);
+    }
+
+    .form-legal {
+      font-size: var(--font-size-sm);
+      opacity: 0.5;
+    }
+
+    @media (max-width: 768px) {
+      .apply-hero h1 {
+        font-size: var(--font-size-2xl);
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .form-actions {
+        flex-direction: column;
+        align-items: stretch;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html#main-content" class="skip-link">Langkau ke kandungan utama</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="index.html" class="logo" aria-label="Vibe Code Academy – kembali ke halaman utama">
+        VIBE<span class="logo-accent">CODE</span> ACADEMY
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="index.html#about" class="nav-link">Tentang</a></li>
+          <li><a href="index.html#courses" class="nav-link">Kursus</a></li>
+          <li><a href="index.html#faq" class="nav-link">Soalan Lazim</a></li>
+          <li><a href="index.html#contact" class="nav-link">Hubungi</a></li>
+        </ul>
+        <a href="apply.html" class="btn btn-nav">Mohon Sekarang</a>
+      </nav>
+      <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Togol menu navigasi">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <section class="apply-hero" aria-labelledby="apply-heading">
+      <div class="container">
+        <h1 id="apply-heading">Pendaftaran <span class="text-gradient">Pelajar</span></h1>
+        <p>Isi borang permohonan di bawah untuk memulakan perjalanan coding anda bersama Vibe Code Academy.</p>
+      </div>
+    </section>
+
+    <section class="apply-form-section" aria-label="Borang pendaftaran">
+      <div class="container">
+        <div id="formStatus" class="sr-only" aria-live="polite"></div>
+
+        <form id="applyForm" class="apply-form" novalidate>
+          <h2 class="form-section-title">Maklumat Peribadi</h2>
+
+          <div class="form-row">
+            <div class="form-group" id="nameGroup">
+              <label for="fullName">Nama Penuh <span class="required">*</span></label>
+              <input type="text" id="fullName" name="fullName" placeholder="cth: Ali bin Ahmad" required autocomplete="name" />
+              <span id="nameError" class="error-message" role="alert">Sila masukkan nama penuh anda.</span>
+            </div>
+
+            <div class="form-group" id="emailGroup">
+              <label for="email">Alamat E-mel <span class="required">*</span></label>
+              <input type="email" id="email" name="email" placeholder="cth: ali@contoh.com" required autocomplete="email" />
+              <span id="emailError" class="error-message" role="alert">Sila masukkan alamat e-mel yang sah.</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="phoneGroup">
+              <label for="phone">Nombor Telefon <span class="required">*</span></label>
+              <input type="tel" id="phone" name="phone" placeholder="cth: 0123456789" required autocomplete="tel" />
+              <span id="phoneError" class="error-message" role="alert">Sila masukkan nombor telefon yang sah.</span>
+            </div>
+
+            <div class="form-group" id="addressGroup">
+              <label for="address">Alamat</label>
+              <input type="text" id="address" name="address" placeholder="cth: No 12, Jalan Bahagia" autocomplete="street-address" />
+            </div>
+          </div>
+
+          <hr class="form-divider" aria-hidden="true" />
+
+          <h2 class="form-section-title">Akaun &amp; Portfolio</h2>
+
+          <div class="form-row">
+            <div class="form-group" id="githubGroup">
+              <label for="github">GitHub URL</label>
+              <input type="url" id="github" name="github" placeholder="cth: https://github.com/ali-dev" autocomplete="url" />
+              <span class="hint">Pautan ke profil GitHub anda (jika ada).</span>
+            </div>
+
+            <div class="form-group" id="socialGroup">
+              <label for="social">Facebook / X (Twitter) URL</label>
+              <input type="url" id="social" name="social" placeholder="cth: https://x.com/ali_dev" autocomplete="url" />
+              <span class="hint">Pautan ke akaun Facebook atau X anda (jika ada).</span>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group" id="portfolioGroup">
+              <label for="portfolio">Portfolio / Laman Web</label>
+              <input type="url" id="portfolio" name="portfolio" placeholder="cth: https://ali-dev.com" autocomplete="url" />
+              <span class="hint">Pautan ke portfolio peribadi (jika ada).</span>
+            </div>
+
+            <div class="form-group" id="linkedinGroup">
+              <label for="linkedin">LinkedIn URL</label>
+              <input type="url" id="linkedin" name="linkedin" placeholder="cth: https://linkedin.com/in/ali" autocomplete="url" />
+              <span class="hint">Pautan ke profil LinkedIn anda (jika ada).</span>
+            </div>
+          </div>
+
+          <hr class="form-divider" aria-hidden="true" />
+
+          <h2 class="form-section-title">Pilihan Kursus &amp; Latar Belakang</h2>
+
+          <div class="form-row">
+            <div class="form-group" id="courseGroup">
+              <label for="course">Kursus Dipohon <span class="required">*</span></label>
+              <select id="course" name="course" required>
+                <option value="">— Sila Pilih —</option>
+                <option value="Frontend Vibes">Frontend Vibes — 12 minggu</option>
+                <option value="Backend Flow">Backend Flow — 10 minggu</option>
+                <option value="Reka Bentuk & Kod">Reka Bentuk &amp; Kod — 8 minggu</option>
+              </select>
+              <span id="courseError" class="error-message" role="alert">Sila pilih kursus yang dipohon.</span>
+            </div>
+
+            <div class="form-group" id="experienceGroup">
+              <label for="experience">Tahap Pengalaman <span class="required">*</span></label>
+              <select id="experience" name="experience" required>
+                <option value="">— Sila Pilih —</option>
+                <option value="Tiada Pengalaman">Tiada Pengalaman — Baru mula belajar</option>
+                <option value="Pemula">Pemula — Ada asas sikit</option>
+                <option value="Pertengahan">Pertengahan — Boleh bina projek mudah</option>
+                <option value="Lanjutan">Lanjutan — Selesa dengan konsep kompleks</option>
+              </select>
+              <span id="experienceError" class="error-message" role="alert">Sila pilih tahap pengalaman anda.</span>
+            </div>
+          </div>
+
+          <div class="form-group" id="motivationGroup">
+            <label for="motivation">Mengapa Anda Ingin Menyertai Kursus Ini? <span class="required">*</span></label>
+            <textarea id="motivation" name="motivation" rows="4" placeholder="Kongsi motivasi, minat, dan apa yang anda harap dapat pelajari..." required></textarea>
+            <span id="motivationError" class="error-message" role="alert">Sila isi motivasi anda.</span>
+          </div>
+
+          <div class="form-group" id="referralGroup">
+            <label for="referral">Bagaimana Anda Tahu Tentang Vibe Code Academy?</label>
+            <select id="referral" name="referral">
+              <option value="">— Sila Pilih (jika ada) —</option>
+              <option value="Media Sosial">Media Sosial</option>
+              <option value="Rakan">Rakan / Keluarga</option>
+              <option value="Google">Google Search</option>
+              <option value="YouTube">YouTube</option>
+              <option value="Event">Event / Workshop</option>
+              <option value="Lain-lain">Lain-lain</option>
+            </select>
+          </div>
+
+          <div class="form-actions">
+            <span class="form-legal">Dengan menghantar borang ini, anda bersetuju dengan syarat dan dasar privasi kami.</span>
+            <button type="submit" class="btn btn-primary" id="submitBtn">Hantar Permohonan</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 Vibe Code Academy. Dibina dengan &#9749; dan vibe yang baik.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var form = document.getElementById('applyForm');
+      var formStatus = document.getElementById('formStatus');
+      var submitBtn = document.getElementById('submitBtn');
+
+      var fullName = document.getElementById('fullName');
+      var email = document.getElementById('email');
+      var phone = document.getElementById('phone');
+      var address = document.getElementById('address');
+      var github = document.getElementById('github');
+      var social = document.getElementById('social');
+      var portfolio = document.getElementById('portfolio');
+      var linkedin = document.getElementById('linkedin');
+      var course = document.getElementById('course');
+      var experience = document.getElementById('experience');
+      var motivation = document.getElementById('motivation');
+      var referral = document.getElementById('referral');
+
+      var fields = {
+        fullName: { el: fullName, group: 'nameGroup', error: 'nameError' },
+        email: { el: email, group: 'emailGroup', error: 'emailError' },
+        phone: { el: phone, group: 'phoneGroup', error: 'phoneError' },
+        course: { el: course, group: 'courseGroup', error: 'courseError' },
+        experience: { el: experience, group: 'experienceGroup', error: 'experienceError' },
+        motivation: { el: motivation, group: 'motivationGroup', error: 'motivationError' }
+      };
+
+      function setError(groupId, show) {
+        var group = document.getElementById(groupId);
+        if (!group) return;
+        if (show) {
+          group.classList.add('has-error');
+        } else {
+          group.classList.remove('has-error');
+        }
+      }
+
+      function isValidEmail(val) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+      }
+
+      function isValidPhone(val) {
+        return /^[\d\s\-\+\(\)]{7,20}$/.test(val);
+      }
+
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.classList.add('btn-loading');
+          submitBtn.disabled = true;
+        } else {
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.disabled = false;
+        }
+      }
+
+      // Clear errors on input
+      Object.keys(fields).forEach(function (key) {
+        var f = fields[key];
+        if (!f.el) return;
+        f.el.addEventListener('input', function () {
+          setError(f.group, false);
+        });
+        f.el.addEventListener('change', function () {
+          setError(f.group, false);
+        });
+      });
+
+      // ================================================================
+      // TUKAR URL INI selepas deploy Google Apps Script Web App
+      // ================================================================
+      var GAS_URL = 'https://script.google.com/macros/s/AKfycbwMb0K1VeqzVzHuH0toV9CtcPrCyK3wS3lVRKnbnxAOsXZfQ3PLYjqyQ4YPmkghQP-7/exec';
+
+      // ================================================================
+
+      function postToApi(url, data) {
+        return fetch(url, {
+          method: 'POST',
+          // Guna text/plain untuk elak CORS preflight (GAS tidak handle OPTIONS)
+    headers: { 'Content-Type': 'text/plain' },
+          body: JSON.stringify(data)
+        }).then(function (res) { return res.json(); });
+      }
+
+      if (form) {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          Object.keys(fields).forEach(function (key) {
+            setError(fields[key].group, false);
+          });
+
+          var hasError = false;
+
+          if (!fullName.value.trim()) {
+            setError('nameGroup', true);
+            hasError = true;
+          }
+          if (!email.value.trim() || !isValidEmail(email.value.trim())) {
+            setError('emailGroup', true);
+            hasError = true;
+          }
+          if (!phone.value.trim() || !isValidPhone(phone.value.trim())) {
+            setError('phoneGroup', true);
+            hasError = true;
+          }
+          if (!course.value) {
+            setError('courseGroup', true);
+            hasError = true;
+          }
+          if (!experience.value) {
+            setError('experienceGroup', true);
+            hasError = true;
+          }
+          if (!motivation.value.trim()) {
+            setError('motivationGroup', true);
+            hasError = true;
+          }
+
+          if (hasError) {
+            if (formStatus) {
+              formStatus.textContent = 'Terdapat ralat dalam borang. Sila semak dan betulkannya.';
+            }
+            var firstError = document.querySelector('.has-error input, .has-error select, .has-error textarea');
+            if (firstError) firstError.focus();
+            return;
+          }
+
+          var data = {
+            fullName: fullName.value.trim(),
+            email: email.value.trim(),
+            phone: phone.value.trim(),
+            address: address.value.trim(),
+            github: github.value.trim(),
+            social: social.value.trim(),
+            portfolio: portfolio.value.trim(),
+            linkedin: linkedin.value.trim(),
+            course: course.value,
+            experience: experience.value,
+            motivation: motivation.value.trim(),
+            referral: referral.value || 'Tidak dinyatakan'
+          };
+
+          setLoading(true);
+          if (formStatus) {
+            formStatus.textContent = 'Menghantar permohonan anda…';
+          }
+
+          function onSuccess(result) {
+            data.id = result.student.id;
+            data.submittedAt = result.student.submittedAt;
+            localStorage.setItem('vca_application', JSON.stringify(data));
+            window.location.href = 'certificate.html?id=' + encodeURIComponent(result.student.id);
+          }
+
+          function onFail() {
+            data.submittedAt = new Date().toISOString();
+            localStorage.setItem('vca_application', JSON.stringify(data));
+            window.location.href = 'certificate.html';
+          }
+
+          // Try GAS first (if URL is set)
+          if (GAS_URL) {
+            postToApi(GAS_URL, data)
+              .then(function (result) {
+                if (result.success && result.student && result.student.id) {
+                  onSuccess(result);
+                } else {
+                  throw new Error(result.error || 'GAS ralat');
+                }
+              })
+              .catch(function () {
+                onFail();
+              });
+          } else {
+            // Fallback: try local Node.js server
+            var localUrl = window.location.origin + '/api/students';
+            postToApi(localUrl, data)
+              .then(function (result) {
+                if (result.success && result.student && result.student.id) {
+                  onSuccess(result);
+                } else {
+                  throw new Error(result.error || 'Local server ralat');
+                }
+              })
+              .catch(function () {
+                onFail();
+              });
+          }
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

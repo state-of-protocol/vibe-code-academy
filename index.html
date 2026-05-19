@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vibe Code Academy | Kuasai Seni Kod</title>
+  <meta name="description" content="Sistem reka bentuk yang didorong token dan boleh diakses untuk Vibe Code Academy. Komponen UI sedia implementasi dengan liputan keadaan penuh." />
+
+  <!-- Google Fonts: Raleway 500 & 700 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ============================================================
+       VIBE CODE ACADEMY – DESIGN SYSTEM (SELURUH TOKEN & KOMPONEN)
+       Mematuhi Design.md & SKILL.md sepenuhnya
+       ============================================================ */
+
+    /* ----- 1. DESIGN TOKENS (semantic custom properties) ----- */
+    :root {
+      /* Tipografi */
+      --font-family-primary: 'Raleway', sans-serif;
+      --font-family-stack: 'Raleway', sans-serif;
+      --font-size-base: 19.2784px;
+      --font-weight-base: 500;
+      --line-height-base: calc(28.9176px / 19.2784px); /* 1.5 */
+      --font-size-xs: 0px;
+      --font-size-sm: 12px;
+      --font-size-md: 16px;
+      --font-size-lg: 19.28px;
+      --font-size-xl: 22.56px;
+      --font-size-2xl: 42.23px;
+      --font-size-3xl: 71.8px;
+      --font-size-4xl: 75.01px;
+
+      /* Warna */
+      --color-text-primary: #f1f5f9;
+      --color-text-muted: #94a3b8;
+      --color-surface-base: #0f172a;
+      --color-surface-muted: #3b82f6;
+      --color-surface-raised: #1e293b;
+      --color-surface-glass: rgba(30, 41, 59, 0.6);
+      --color-border-strong: #334155;
+
+      /* Gradient */
+      --gradient-accent: linear-gradient(135deg, #3b82f6, #a855f7);
+      --gradient-hero: radial-gradient(circle at top, #1e3a8a 0%, #0f172a 100%);
+      --gradient-text: linear-gradient(to right, #60a5fa, #a855f7);
+      --gradient-card: linear-gradient(135deg, rgba(59,130,246,0.08), rgba(168,85,247,0.04));
+
+      /* Jarak */
+      --space-1: 4px;
+      --space-2: 7px;
+      --space-3: 8px;
+      --space-4: 10px;
+      --space-5: 15px;
+      --space-6: 16px;
+      --space-7: 30px;
+      --space-8: 32px;
+
+      /* Jejari */
+      --radius-xs: 6.4px;
+      --radius-sm: 12px;
+      --radius-md: 16px;
+      --radius-lg: 24px;
+
+      /* Bayang (Neo-morphism & Glass) */
+      --shadow-neo: 8px 8px 16px rgba(0,0,0,0.3), -4px -4px 12px rgba(255,255,255,0.03);
+      --shadow-neo-sm: 4px 4px 8px rgba(0,0,0,0.3), -2px -2px 6px rgba(255,255,255,0.02);
+      --shadow-glass: 0 8px 32px rgba(0,0,0,0.3);
+      --shadow-glow: 0 0 30px rgba(59,130,246,0.15);
+      --shadow-card: 0 4px 20px rgba(0,0,0,0.2);
+      --shadow-button: 0 4px 15px rgba(59,130,246,0.3);
+
+      /* Glassmorphism */
+      --glass-blur: 12px;
+      --glass-border: 1px solid rgba(255,255,255,0.06);
+      --glass-bg: rgba(30, 41, 59, 0.5);
+
+      /* Gerakan */
+      --motion-instant: 100ms;
+      --motion-fast: 150ms;
+      --motion-normal: 170ms;
+      --motion-slow: 300ms;
+      --motion-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* ----- 2. RESET & ASAS ----- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* Hormati tetapan gerakan sistem */
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+      *,
+      *::before,
+      *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: var(--font-family-stack);
+      background-color: var(--color-surface-base);
+      color: var(--color-text-primary);
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-base);
+      line-height: var(--line-height-base);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--font-family-primary);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 var(--space-6);
+    }
+
+    /* ----- 3. SKIP-LINK (pautan langkau) ----- */
+    .skip-link {
+      position: absolute;
+      left: -999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+    }
+
+    .skip-link:focus {
+      left: var(--space-6);
+      top: var(--space-6);
+      width: auto;
+      height: auto;
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-surface-muted);
+      color: var(--color-text-primary);
+      border-radius: var(--radius-xs);
+      z-index: 10000;
+      font-family: var(--font-family-primary);
+      font-weight: var(--font-weight-base);
+      text-decoration: none;
+      outline: none;
+    }
+
+    /* ----- 4. PENGEPALA & NAVIGASI ----- */
+    .site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: var(--space-6) 0;
+      transition: background var(--motion-slow) ease,
+                  padding var(--motion-slow) ease;
+    }
+
+    .site-header.scrolled {
+      background: var(--glass-bg);
+      backdrop-filter: blur(var(--glass-blur));
+      -webkit-backdrop-filter: blur(var(--glass-blur));
+      padding: var(--space-5) 0;
+      border-bottom: var(--glass-border);
+      box-shadow: var(--shadow-glass);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-family-primary);
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--color-text-primary);
+    }
+
+    .logo-accent {
+      color: var(--color-surface-muted);
+    }
+
+    /* Navigasi utama */
+    .main-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+    }
+
+    .main-nav ul {
+      list-style: none;
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .nav-link {
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-base);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-text-primary);
+      opacity: 0.8;
+      transition: color var(--motion-fast), opacity var(--motion-fast);
+      position: relative;
+    }
+
+    .nav-link:hover {
+      opacity: 1;
+      color: var(--color-surface-muted);
+    }
+
+    .nav-link:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+
+    /* Garis bawah animasi pautan navigasi */
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--color-surface-muted);
+      transition: width var(--motion-slow);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ----- 5. BUTANG (3 varian + nav) ----- */
+    .btn {
+      display: inline-block;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-xs);
+      font-family: var(--font-family-stack);
+      font-weight: var(--font-weight-base);
+      font-size: var(--font-size-lg);
+      letter-spacing: 0.03em;
+      cursor: pointer;
+      transition: all var(--motion-fast) ease;
+      border: none;
+      text-align: center;
+      min-height: 44px; /* WCAG 2.5.5 – sasaran sentuh minimum */
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+
+    .btn:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: scale(0.97);
+      transition: transform var(--motion-instant);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Butang primer */
+    .btn-primary {
+      background: var(--gradient-accent);
+      color: var(--color-text-primary);
+      border: none;
+      box-shadow: var(--shadow-button);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      filter: brightness(1.15);
+      box-shadow: 0 6px 25px rgba(59,130,246,0.4);
+      transform: translateY(-2px);
+    }
+
+    /* Butang sekunder */
+    .btn-secondary {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-strong);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: var(--color-surface-raised);
+    }
+
+    /* Butang hantu */
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-text-primary);
+      border: none;
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--color-surface-raised);
+    }
+
+    /* Butang CTA navigasi */
+    .btn-nav {
+      background: transparent;
+      border: 1px solid var(--color-surface-muted);
+      color: var(--color-surface-muted);
+      padding: var(--space-2) var(--space-5);
+      box-shadow: none;
+    }
+
+    .btn-nav:hover:not(:disabled) {
+      background: var(--gradient-accent);
+      color: var(--color-text-primary);
+      border-color: transparent;
+      box-shadow: var(--shadow-button);
+    }
+
+    /* Keadaan loading butang */
+    .btn-loading {
+      position: relative;
+      color: transparent !important;
+      pointer-events: none;
+    }
+
+    .btn-loading::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 16px;
+      margin: -8px 0 0 -8px;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-top-color: var(--color-text-primary);
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ----- 6. TOGEL MUDAH ALIH ----- */
+    .mobile-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-1);
+    }
+
+    .mobile-toggle:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+
+    .mobile-toggle span {
+      display: block;
+      width: 25px;
+      height: 2px;
+      background: var(--color-text-primary);
+      transition: transform var(--motion-normal), opacity var(--motion-normal);
+    }
+
+    /* ----- 7. HERO ----- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      background: var(--gradient-hero);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(59,130,246,0.1), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 80px;
+      background: linear-gradient(to top, var(--color-surface-base), transparent);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: var(--font-size-2xl);
+      font-weight: 700;
+      margin-bottom: var(--space-5);
+      color: var(--color-text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    .text-gradient {
+      background: var(--gradient-text);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: var(--font-size-lg);
+      color: var(--color-text-primary);
+      opacity: 0.8;
+      margin-bottom: var(--space-7);
+      max-width: 500px;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: var(--space-5);
+      flex-wrap: wrap;
+    }
+
+    /* Tetingkap kod hiasan */
+    .hero-visual {
+      display: flex;
+      justify-content: center;
+    }
+
+    .code-window {
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: var(--shadow-neo), 0 25px 50px rgba(0,0,0,0.5);
+    }
+
+    .code-dots {
+      display: flex;
+      gap: var(--space-2);
+      margin-bottom: var(--space-5);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .dot-red   { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green  { background: #27c93f; }
+
+    .code-window pre code {
+      font-family: 'Courier New', monospace;
+      font-size: var(--font-size-sm);
+      color: var(--color-text-primary);
+      line-height: 1.8;
+    }
+
+    .code-tag    { color: #ff79c6; }
+    .code-func   { color: #50fa7b; }
+    .code-string { color: #f1fa8c; }
+
+    /* ----- 8. BAHAGIAN ----- */
+    .section {
+      padding: var(--space-8) 0;
+    }
+
+    .section-title {
+      font-size: var(--font-size-2xl);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-5);
+      text-align: center;
+    }
+
+    .section-description {
+      max-width: 700px;
+      margin: 0 auto var(--space-7);
+      color: var(--color-text-primary);
+      opacity: 0.8;
+      text-align: center;
+    }
+
+    /* ----- 9. KAD (kursus) ----- */
+    .course-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+      margin-top: var(--space-7);
+    }
+
+    .course-card {
+      background: var(--color-surface-raised);
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-card);
+      transition: transform var(--motion-slow) var(--motion-spring),
+                  border-color var(--motion-fast),
+                  box-shadow var(--motion-slow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .course-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-card);
+      opacity: 0;
+      transition: opacity var(--motion-slow);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .course-card:hover {
+      border-color: var(--color-surface-muted);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .course-card:hover::before {
+      opacity: 1;
+    }
+
+    .course-card:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+    }
+
+    .card-icon {
+      font-size: 2.5rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .course-card h3 {
+      font-size: var(--font-size-xl);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-3);
+      /* Pengendalian limpahan tajuk */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+    }
+
+    .course-card p {
+      color: var(--color-text-primary);
+      opacity: 0.7;
+      margin-bottom: var(--space-6);
+      /* Pengendalian limpahan teks */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+
+    .card-duration {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      background: rgba(59, 130, 246, 0.15);
+      color: #60a5fa;
+      border-radius: 20px;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-base);
+    }
+
+    /* ----- 10. AKORDION FAQ ----- */
+    .faq-list {
+      max-width: 800px;
+      margin: var(--space-7) auto 0;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: var(--space-5) 0;
+      background: none;
+      border: none;
+      color: var(--color-text-primary);
+      font-family: var(--font-family-primary);
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-base);
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: color var(--motion-fast);
+    }
+
+    .faq-question:hover {
+      color: var(--color-surface-muted);
+    }
+
+    .faq-question:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+    }
+
+    .faq-icon {
+      font-size: 1.5rem;
+      font-weight: 300;
+      transition: transform var(--motion-normal);
+    }
+
+    .faq-item.active .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height var(--motion-slow) ease,
+                  padding var(--motion-slow) ease;
+      color: var(--color-text-primary);
+      opacity: 0.8;
+      padding: 0 var(--space-5);
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 200px;
+      padding: 0 var(--space-5) var(--space-6);
+    }
+
+    /* ----- 11. BORANG HUBUNGAN ----- */
+    .contact-form {
+      max-width: 600px;
+      margin: var(--space-7) auto 0;
+    }
+
+    .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      background: var(--glass-bg);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-primary);
+      font-family: var(--font-family-stack);
+      font-size: var(--font-size-lg);
+      box-shadow: var(--shadow-neo-sm);
+      transition: border-color var(--motion-fast), box-shadow var(--motion-fast);
+    }
+
+    .form-group input:hover,
+    .form-group textarea:hover,
+    .form-group select:hover {
+      border-color: var(--color-text-primary);
+    }
+
+    .form-group input:focus-visible,
+    .form-group textarea:focus-visible,
+    .form-group select:focus-visible {
+      outline: 2px solid var(--color-surface-muted);
+      outline-offset: 0px;
+      border-color: transparent;
+      box-shadow: 0 0 0 3px rgba(59,130,246,0.1), var(--shadow-neo-sm);
+    }
+
+    .form-group input:disabled,
+    .form-group textarea:disabled,
+    .form-group select:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: #666; /* pengecualian dibenarkan – bukan teks kandungan */
+    }
+
+    /* Keadaan ralat borang */
+    .form-group.has-error input,
+    .form-group.has-error textarea,
+    .form-group.has-error select {
+      border-color: var(--color-surface-muted);
+    }
+
+    .form-group .error-message {
+      color: var(--color-surface-muted);
+      font-size: var(--font-size-sm);
+      margin-top: var(--space-1);
+      display: none;
+    }
+
+    .form-group.has-error .error-message {
+      display: block;
+    }
+
+    /* Mesej kejayaan borang */
+    .form-success-message {
+      display: none;
+      color: var(--color-text-primary);
+      text-align: center;
+      padding: var(--space-5);
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-xs);
+      margin-top: var(--space-5);
+    }
+
+    .form-success-message.visible {
+      display: block;
+    }
+
+    /* ----- 12. KAWASAN LANGSUNG ARIA ----- */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ----- 13. KAKI ----- */
+    .site-footer {
+      padding: var(--space-7) 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      text-align: center;
+      color: var(--color-text-muted);
+      font-size: var(--font-size-sm);
+    }
+
+    .site-footer a {
+      color: var(--color-surface-muted);
+      text-decoration: underline;
+    }
+
+    .site-footer a:hover {
+      filter: brightness(1.2);
+    }
+
+    .site-footer a:focus-visible {
+      outline: 2px solid var(--color-border-strong);
+      outline-offset: 2px;
+    }
+
+    /* ----- 14. RESPONSIF ----- */
+    @media (max-width: 768px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-7);
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      /* Navigasi mudah alih */
+      .main-nav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 80%;
+        max-width: 400px;
+        height: 100vh;
+        background: var(--glass-bg);
+        backdrop-filter: blur(var(--glass-blur));
+        -webkit-backdrop-filter: blur(var(--glass-blur));
+        flex-direction: column;
+        justify-content: center;
+        gap: var(--space-7);
+        transition: right var(--motion-slow) ease;
+        border-left: var(--glass-border);
+        box-shadow: var(--shadow-glass);
+        padding: var(--space-7);
+      }
+
+      .main-nav.active {
+        right: 0;
+      }
+
+      .main-nav ul {
+        flex-direction: column;
+        gap: var(--space-5);
+        text-align: center;
+      }
+
+      .mobile-toggle {
+        display: flex;
+      }
+
+      .mobile-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+      }
+
+      .mobile-toggle.active span:nth-child(2) {
+        opacity: 0;
+      }
+    }
+
+    .course-card-link {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+    }
+
+    .course-card-link:hover .course-card {
+      border-color: var(--color-surface-muted);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .course-card-link:focus-visible {
+      outline: none;
+    }
+
+    .course-card-link:focus-visible .course-card {
+      outline: 2px solid var(--color-border-strong);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Pautan langkau papan kekunci -->
+  <a href="#main-content" class="skip-link">Langkau ke kandungan utama</a>
+
+  <!-- ============ PENGEPALA ============ -->
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="#" class="logo" aria-label="Vibe Code Academy – kembali ke halaman utama">
+        VIBE<span class="logo-accent">CODE</span> ACADEMY
+      </a>
+
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="#about" class="nav-link">Tentang</a></li>
+          <li><a href="#courses" class="nav-link">Kursus</a></li>
+          <li><a href="#faq" class="nav-link">Soalan Lazim</a></li>
+          <li><a href="#contact" class="nav-link">Hubungi</a></li>
+        </ul>
+        <a href="apply.html" class="btn btn-nav">Mohon Sekarang</a>
+      </nav>
+
+      <button
+        class="mobile-toggle"
+        id="mobileToggle"
+        aria-expanded="false"
+        aria-controls="mainNav"
+        aria-label="Togol menu navigasi"
+      >
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ============ KANDUNGAN UTAMA ============ -->
+  <main id="main-content">
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-heading">
+      <div class="container hero-grid">
+        <div class="hero-text">
+          <h1 id="hero-heading" class="hero-title">
+            Kuasai <span class="text-gradient">Vibe</span> Kod
+          </h1>
+          <p class="hero-subtitle">
+            Pengalaman, pengetahuan, dan perspektif unik daripada veteran industri.
+            Sertai akademi yang menukar minda ingin tahu menjadi pencipta yakin.
+          </p>
+          <div class="hero-cta">
+            <a href="courses/frontend-vibes.html" class="btn btn-primary">Teroka Kursus</a>
+            <a href="apply.html" class="btn btn-secondary">Daftar Sekarang</a>
+          </div>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <div class="code-window">
+            <div class="code-dots">
+              <span class="dot dot-red"></span>
+              <span class="dot dot-yellow"></span>
+              <span class="dot dot-green"></span>
+            </div>
+            <pre><code><span class="code-tag">const</span> <span class="code-func">vibe</span> = <span class="code-string">"Code"</span>;
+<span class="code-tag">function</span> <span class="code-func">create</span>() {
+    <span class="code-tag">return</span> <span class="code-string">`Keep the ${vibe} alive`</span>;
+}</code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <div class="container">
+        <h2 id="about-heading" class="section-title">Apa itu Vibe Code Academy?</h2>
+        <p class="section-description">
+          Vibe Code Academy adalah ruang yang didedikasikan untuk berkongsi pengalaman profesional,
+          budaya, dan pengetahuan dalam pembangunan perisian. Melalui perbualan,
+          bengkel, dan kandungan eksklusif, mentor kami berkongsi perjalanan, cabaran,
+          dan dinamik industri teknologi.
+        </p>
+      </div>
+    </section>
+
+    <!-- COURSES -->
+    <section id="courses" class="section" aria-labelledby="courses-heading">
+      <div class="container">
+        <h2 id="courses-heading" class="section-title">Kursus Signature Kami</h2>
+        <div class="course-grid">
+          <!-- Kad 1 -->
+          <a href="courses/frontend-vibes.html" class="course-card-link">
+            <article class="course-card" tabindex="0" aria-labelledby="course1-title">
+              <div class="card-icon" aria-hidden="true">☕</div>
+              <h3 id="course1-title">Frontend Vibes</h3>
+              <p>Kuasai React, Vue, dan CSS moden untuk membina antara muka pengguna yang menakjubkan.</p>
+              <span class="card-duration">12 minggu</span>
+            </article>
+          </a>
+          <!-- Kad 2 -->
+          <a href="courses/backend-flow.html" class="course-card-link">
+            <article class="course-card" tabindex="0" aria-labelledby="course2-title">
+              <div class="card-icon" aria-hidden="true">⚙️</div>
+              <h3 id="course2-title">Backend Flow</h3>
+              <p>Node.js, Python, pangkalan data — bina enjin yang menjana kuasa web.</p>
+              <span class="card-duration">10 minggu</span>
+            </article>
+          </a>
+          <!-- Kad 3 -->
+          <a href="courses/reka-bentuk-kod.html" class="course-card-link">
+            <article class="course-card" tabindex="0" aria-labelledby="course3-title">
+              <div class="card-icon" aria-hidden="true">🎨</div>
+              <h3 id="course3-title">Reka Bentuk &amp; Kod</h3>
+              <p>Prinsip UX/UI digabungkan dengan kemahiran frontend untuk reka bentuk produk lengkap.</p>
+              <span class="card-duration">8 minggu</span>
+            </article>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section" aria-labelledby="faq-heading">
+      <div class="container">
+        <h2 id="faq-heading" class="section-title">Soalan Lazim</h2>
+        <div class="faq-list">
+          <!-- Item 1 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Vibe Academy untuk siapa? <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" aria-hidden="true">
+              Vibe Academy adalah untuk semua orang — profesional, pencipta, pelajar, dan
+              sesiapa yang ingin mengembangkan kemahiran kod mereka atau meneroka minat baru.
+              Program kami termasuk bimbingan peringkat tinggi, kursus video eksklusif, acara
+              langsung, dan komuniti yang cergas untuk rangkaian.
+            </div>
+          </div>
+          <!-- Item 2 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Bagaimana cara menjadi ahli? <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" aria-hidden="true">
+              Lawati laman web kami, pilih pelan langganan, dan lengkapkan proses
+              pendaftaran. Setelah didaftarkan, isi profil anda, teroka kursus dan
+              acara yang tersedia, dan mula berinteraksi dengan komuniti.
+            </div>
+          </div>
+          <!-- Item 3 -->
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Adakah ada prasyarat? <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer" aria-hidden="true">
+              Tiada pengalaman sebelumnya diperlukan untuk trek pemula kami. Untuk kursus
+              lanjutan, pemahaman asas pengaturcaraan adalah disyorkan. Kami akan
+              membantu anda mencari titik permulaan yang tepat.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <div class="container">
+        <h2 id="contact-heading" class="section-title">Hubungi Kami</h2>
+        <p class="section-description">
+          Untuk pertanyaan media, kerjasama, atau maklumat tentang Vibe Academy,
+          hantarkan mesej kepada kami menggunakan borang di bawah.
+        </p>
+
+        <!-- Kawasan langsung untuk mesej status -->
+        <div id="formStatus" class="sr-only" aria-live="polite"></div>
+
+        <form id="contactForm" class="contact-form" aria-label="Borang hubungan" novalidate>
+          <!-- Nama -->
+          <div class="form-group" id="nameGroup">
+            <input
+              type="text"
+              id="nameInput"
+              placeholder="Nama Anda"
+              required
+              autocomplete="name"
+              aria-label="Nama penuh anda"
+              aria-describedby="nameError"
+            />
+            <span id="nameError" class="error-message" role="alert">Sila masukkan nama anda.</span>
+          </div>
+
+          <!-- Emel -->
+          <div class="form-group" id="emailGroup">
+            <input
+              type="email"
+              id="emailInput"
+              placeholder="E-mel Anda"
+              required
+              autocomplete="email"
+              aria-label="Alamat e-mel anda"
+              aria-describedby="emailError"
+            />
+            <span id="emailError" class="error-message" role="alert">Sila masukkan alamat e-mel yang sah.</span>
+          </div>
+
+          <!-- Mesej -->
+          <div class="form-group" id="messageGroup">
+            <textarea
+              rows="5"
+              id="messageInput"
+              placeholder="Mesej Anda"
+              required
+              aria-label="Mesej anda"
+              aria-describedby="messageError"
+            ></textarea>
+            <span id="messageError" class="error-message" role="alert">Sila masukkan mesej anda.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary" id="submitBtn">Hantar Mesej</button>
+        </form>
+
+        <!-- Mesej kejayaan -->
+        <div id="successMessage" class="form-success-message">
+          ✅ Terima kasih atas mesej anda! Kami akan menghubungi anda tidak lama lagi.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ KAKI ============ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 Vibe Code Academy. Dibina dengan ☕ dan vibe yang baik.</p>
+    </div>
+  </footer>
+
+  <!-- ============ SKRIP ============ -->
+  <script>
+    (function () {
+      'use strict';
+
+      // ---------------------------------------------------------------
+      // 1. Navigasi Mudah Alih (mobile toggle)
+      // ---------------------------------------------------------------
+      const mobileToggle = document.getElementById('mobileToggle');
+      const mainNav = document.getElementById('mainNav');
+
+      function toggleNav(open) {
+        const isOpen = open ?? !mainNav.classList.contains('active');
+        mobileToggle.classList.toggle('active', isOpen);
+        mainNav.classList.toggle('active', isOpen);
+        mobileToggle.setAttribute('aria-expanded', isOpen);
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      }
+
+      if (mobileToggle && mainNav) {
+        mobileToggle.addEventListener('click', function () {
+          toggleNav();
+        });
+
+        // Tutup navigasi apabila pautan di dalamnya diklik
+        mainNav.querySelectorAll('.nav-link, .btn-nav').forEach(function (link) {
+          link.addEventListener('click', function () {
+            if (mainNav.classList.contains('active')) {
+              toggleNav(false);
+            }
+          });
+        });
+
+        // Tutup navigasi dengan kekunci Escape
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && mainNav.classList.contains('active')) {
+            toggleNav(false);
+            mobileToggle.focus();
+          }
+        });
+      }
+
+      // ---------------------------------------------------------------
+      // 2. Kesan Tatal Pengepala
+      // ---------------------------------------------------------------
+      const siteHeader = document.getElementById('siteHeader');
+      if (siteHeader) {
+        window.addEventListener('scroll', function () {
+          siteHeader.classList.toggle('scrolled', window.scrollY > 50);
+        });
+      }
+
+      // ---------------------------------------------------------------
+      // 3. Akordion FAQ (satu item dibuka pada satu masa)
+      // ---------------------------------------------------------------
+      document.querySelectorAll('.faq-question').forEach(function (question) {
+        question.addEventListener('click', function () {
+          const faqItem = question.parentElement;
+          const isActive = faqItem.classList.contains('active');
+
+          // Tutup semua item FAQ
+          document.querySelectorAll('.faq-item').forEach(function (item) {
+            item.classList.remove('active');
+            const btn = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            if (btn) btn.setAttribute('aria-expanded', 'false');
+            if (answer) answer.setAttribute('aria-hidden', 'true');
+          });
+
+          // Buka item semasa jika belum aktif
+          if (!isActive) {
+            faqItem.classList.add('active');
+            question.setAttribute('aria-expanded', 'true');
+            const answer = faqItem.querySelector('.faq-answer');
+            if (answer) answer.setAttribute('aria-hidden', 'false');
+          }
+        });
+      });
+
+      // ---------------------------------------------------------------
+      // 4. Tatal Lembut untuk Pautan Anchor (fallback)
+      // ---------------------------------------------------------------
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href === '#' || href === '') return;
+          const target = document.querySelector(href);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+
+      // ---------------------------------------------------------------
+      // 5. Pautan Langkau (skip-link)
+      // ---------------------------------------------------------------
+      const skipLink = document.querySelector('.skip-link');
+      if (skipLink) {
+        skipLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(skipLink.getAttribute('href'));
+          if (target) {
+            target.setAttribute('tabindex', '-1');
+            target.focus({ preventScroll: true });
+            target.scrollIntoView({ behavior: 'smooth' });
+            target.addEventListener('blur', function () {
+              target.removeAttribute('tabindex');
+            }, { once: true });
+          }
+        });
+      }
+
+      // ---------------------------------------------------------------
+      // 6. Pengesahan Borang Hubungan & Keadaan Ralat
+      // ---------------------------------------------------------------
+      var contactForm = document.getElementById('contactForm');
+      var formStatus = document.getElementById('formStatus');
+      var successMessage = document.getElementById('successMessage');
+      var submitBtn = document.getElementById('submitBtn');
+
+      // Elemen input & kumpulan
+      var nameGroup = document.getElementById('nameGroup');
+      var emailGroup = document.getElementById('emailGroup');
+      var messageGroup = document.getElementById('messageGroup');
+      var nameInput = document.getElementById('nameInput');
+      var emailInput = document.getElementById('emailInput');
+      var messageInput = document.getElementById('messageInput');
+
+      /**
+       * Tetapkan keadaan ralat pada kumpulan borang
+       */
+      function setError(group, show) {
+        if (show) {
+          group.classList.add('has-error');
+        } else {
+          group.classList.remove('has-error');
+        }
+      }
+
+      /**
+       * Sahkan emel dengan corak asas
+       */
+      function isValidEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      /**
+       * Tetapkan keadaan loading butang hantar
+       */
+      function setLoading(isLoading) {
+        if (isLoading) {
+          submitBtn.classList.add('btn-loading');
+          submitBtn.disabled = true;
+        } else {
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.disabled = false;
+        }
+      }
+
+      if (contactForm) {
+        contactForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Bersihkan semua ralat dahulu
+          setError(nameGroup, false);
+          setError(emailGroup, false);
+          setError(messageGroup, false);
+          var hasError = false;
+
+          // Sahkan nama
+          if (!nameInput.value.trim()) {
+            setError(nameGroup, true);
+            hasError = true;
+          }
+
+          // Sahkan emel
+          if (!emailInput.value.trim() || !isValidEmail(emailInput.value.trim())) {
+            setError(emailGroup, true);
+            hasError = true;
+          }
+
+          // Sahkan mesej
+          if (!messageInput.value.trim()) {
+            setError(messageGroup, true);
+            hasError = true;
+          }
+
+          if (hasError) {
+            // Umumkan ralat kepada pembaca skrin
+            if (formStatus) {
+              formStatus.textContent = 'Terdapat ralat dalam borang. Sila semak dan betulkannya.';
+            }
+            // Fokus kepada input pertama yang mempunyai ralat
+            if (nameGroup.classList.contains('has-error')) {
+              nameInput.focus();
+            } else if (emailGroup.classList.contains('has-error')) {
+              emailInput.focus();
+            } else if (messageGroup.classList.contains('has-error')) {
+              messageInput.focus();
+            }
+            return;
+          }
+
+          // Tiru penghantaran borang dengan keadaan loading
+          setLoading(true);
+          if (formStatus) {
+            formStatus.textContent = 'Menghantar mesej anda…';
+          }
+
+          setTimeout(function () {
+            setLoading(false);
+            contactForm.reset();
+            // Umumkan kejayaan
+            if (formStatus) {
+              formStatus.textContent = 'Mesej anda telah berjaya dihantar. Terima kasih!';
+            }
+            if (successMessage) {
+              successMessage.classList.add('visible');
+            }
+            // Sembunyikan mesej kejayaan selepas 5 saat
+            setTimeout(function () {
+              if (successMessage) {
+                successMessage.classList.remove('visible');
+              }
+            }, 5000);
+          }, 1500);
+        });
+
+        // Alih keluar keadaan ralat semasa pengguna mula menaip
+        [nameInput, emailInput, messageInput].forEach(function (input) {
+          if (!input) return;
+          input.addEventListener('input', function () {
+            var group = input.closest('.form-group');
+            if (group && group.classList.contains('has-error')) {
+              setError(group, false);
+            }
+          });
+        });
+      }
+
+    })();
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

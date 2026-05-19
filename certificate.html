@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sijil Pendaftaran — Vibe Code Academy</title>
+  <meta name="description" content="Sijil pendaftaran pelajar Vibe Code Academy." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .cert-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .certificate {
+      max-width: 900px;
+      width: 100%;
+      background: var(--color-surface-raised);
+      border: 2px solid var(--color-surface-muted);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8);
+      position: relative;
+      box-shadow: var(--shadow-neo), 0 0 60px rgba(59,130,246,0.08);
+    }
+
+    .cert-border {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: calc(var(--radius-lg) - 2px);
+      pointer-events: none;
+    }
+
+    .certificate::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--gradient-card);
+      border-radius: inherit;
+      pointer-events: none;
+    }
+
+    .cert-header {
+      text-align: center;
+      margin-bottom: var(--space-7);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-badge {
+      display: inline-block;
+      font-size: 3rem;
+      margin-bottom: var(--space-4);
+    }
+
+    .cert-header h1 {
+      font-size: var(--font-size-4xl);
+      letter-spacing: 0.05em;
+    }
+
+    .cert-header .sub {
+      font-size: var(--font-size-lg);
+      opacity: 0.6;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-top: var(--space-2);
+    }
+
+    .cert-seal {
+      text-align: center;
+      margin: var(--space-7) 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-seal-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid var(--color-surface-muted);
+      font-size: 2.5rem;
+      background: var(--glass-bg);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: var(--shadow-neo-sm);
+    }
+
+    .cert-body {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .cert-body .intro {
+      font-size: var(--font-size-lg);
+      opacity: 0.7;
+      margin-bottom: var(--space-5);
+    }
+
+    .cert-body .student-name {
+      font-size: var(--font-size-3xl);
+      font-weight: 700;
+      color: var(--color-surface-muted);
+      margin-bottom: var(--space-3);
+      word-break: break-word;
+    }
+
+    .cert-body .student-course {
+      font-size: var(--font-size-xl);
+      margin-bottom: var(--space-6);
+    }
+
+    .cert-body .student-course span {
+      color: var(--color-surface-muted);
+      font-weight: 700;
+    }
+
+    .cert-details {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-5);
+      margin: var(--space-7) 0;
+      text-align: left;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-detail-item {
+      padding: var(--space-4);
+      background: var(--glass-bg);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border-radius: var(--radius-sm);
+      border: var(--glass-border);
+      box-shadow: var(--shadow-neo-sm);
+    }
+
+    .cert-detail-item .label {
+      font-size: var(--font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.5;
+      display: block;
+      margin-bottom: var(--space-1);
+    }
+
+    .cert-detail-item .value {
+      font-size: var(--font-size-md);
+      word-break: break-word;
+    }
+
+    .cert-detail-item .value a {
+      color: var(--color-surface-muted);
+      text-decoration: underline;
+    }
+
+    .cert-detail-item .value a:hover {
+      filter: brightness(1.2);
+    }
+
+    .cert-footer {
+      text-align: center;
+      margin-top: var(--space-7);
+      padding-top: var(--space-6);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      position: relative;
+      z-index: 1;
+    }
+
+    .cert-footer .date {
+      font-size: var(--font-size-sm);
+      opacity: 0.5;
+    }
+
+    .cert-footer .id {
+      font-family: monospace;
+      font-size: var(--font-size-sm);
+      opacity: 0.3;
+      margin-top: var(--space-2);
+    }
+
+    .cert-actions {
+      text-align: center;
+      margin-top: var(--space-7);
+      display: flex;
+      gap: var(--space-5);
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .cert-empty {
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+    .cert-empty h2 {
+      font-size: var(--font-size-2xl);
+      margin-bottom: var(--space-5);
+    }
+
+    .cert-empty p {
+      opacity: 0.7;
+      margin-bottom: var(--space-7);
+    }
+
+    @media print {
+      body {
+        background: #000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      .site-header,
+      .site-footer,
+      .cert-actions {
+        display: none !important;
+      }
+      .cert-page {
+        padding: 0;
+        min-height: auto;
+      }
+      .certificate {
+        box-shadow: none;
+        border: 2px solid #3b82f6;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .certificate {
+        padding: var(--space-6);
+      }
+      .cert-header h1 {
+        font-size: var(--font-size-2xl);
+      }
+      .cert-body .student-name {
+        font-size: var(--font-size-2xl);
+      }
+      .cert-details {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html#main-content" class="skip-link">Langkau ke kandungan utama</a>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container header-container">
+      <a href="index.html" class="logo" aria-label="Vibe Code Academy – kembali ke halaman utama">
+        VIBE<span class="logo-accent">CODE</span> ACADEMY
+      </a>
+      <nav class="main-nav" id="mainNav" aria-label="Navigasi utama">
+        <ul>
+          <li><a href="index.html#about" class="nav-link">Tentang</a></li>
+          <li><a href="index.html#courses" class="nav-link">Kursus</a></li>
+          <li><a href="index.html#faq" class="nav-link">Soalan Lazim</a></li>
+          <li><a href="index.html#contact" class="nav-link">Hubungi</a></li>
+        </ul>
+        <a href="apply.html" class="btn btn-nav">Mohon Sekarang</a>
+      </nav>
+      <button class="mobile-toggle" id="mobileToggle" aria-expanded="false" aria-controls="mainNav" aria-label="Togol menu navigasi">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+    <div class="cert-page" id="certPage">
+      <div class="certificate" id="certificate">
+        <div class="cert-border"></div>
+
+        <div class="cert-header">
+          <div class="cert-badge">&#127891;</div>
+          <h1>VIBE<span class="logo-accent">CODE</span> ACADEMY</h1>
+          <div class="sub">Sijil Pendaftaran Pelajar</div>
+        </div>
+
+        <div class="cert-seal">
+          <div class="cert-seal-icon">&#10003;</div>
+        </div>
+
+        <div class="cert-body" id="certBody">
+          <p class="intro">Dengan ini diisytiharkan bahawa</p>
+          <div class="student-name" id="certName">—</div>
+          <p class="intro">telah berjaya didaftarkan sebagai</p>
+          <div class="student-course">PELAJAR <span id="certCourse">—</span></div>
+        </div>
+
+        <div class="cert-details" id="certDetails">
+          <div class="cert-detail-item">
+            <span class="label">E-mel</span>
+            <span class="value" id="certEmail">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">Telefon</span>
+            <span class="value" id="certPhone">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">Tahap Pengalaman</span>
+            <span class="value" id="certExperience">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">Alamat</span>
+            <span class="value" id="certAddress">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">GitHub</span>
+            <span class="value" id="certGithub">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">Facebook / X</span>
+            <span class="value" id="certSocial">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">Portfolio</span>
+            <span class="value" id="certPortfolio">—</span>
+          </div>
+          <div class="cert-detail-item">
+            <span class="label">LinkedIn</span>
+            <span class="value" id="certLinkedin">—</span>
+          </div>
+          <div class="cert-detail-item" style="grid-column: 1 / -1;">
+            <span class="label">Motivasi</span>
+            <span class="value" id="certMotivation" style="font-style: italic;">—</span>
+          </div>
+          <div class="cert-detail-item" style="grid-column: 1 / -1;">
+            <span class="label">Bagaimana Anda Tahu Tentang Kami</span>
+            <span class="value" id="certReferral">—</span>
+          </div>
+        </div>
+
+        <div class="cert-footer">
+          <div class="date" id="certDate">—</div>
+          <div class="id" id="certId">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cert-actions" id="certActions">
+      <a href="index.html" class="btn btn-secondary">Kembali ke Laman Utama</a>
+      <button class="btn btn-primary" onclick="window.print()">Cetak Sijil</button>
+      <a href="apply.html" class="btn btn-ghost">Daftar Baru</a>
+    </div>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <p>&copy; 2025 Vibe Code Academy. Dibina dengan &#9749; dan vibe yang baik.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      var certBody = document.getElementById('certBody');
+      var certDetails = document.getElementById('certDetails');
+      var certActions = document.getElementById('certActions');
+
+      function showNoData() {
+        certBody.innerHTML =
+          '<h2 style="font-size:var(--font-size-2xl);margin-bottom:var(--space-5);">Tiada Data Permohonan</h2>' +
+          '<p style="opacity:0.7;margin-bottom:var(--space-6);">Sila isi borang pendaftaran terlebih dahulu.</p>' +
+          '<a href="apply.html" class="btn btn-primary">Daftar Sekarang</a>';
+        certDetails.style.display = 'none';
+        if (certActions) certActions.style.display = 'none';
+      }
+
+      function esc(str) {
+        if (!str) return '<span style="opacity:0.3">—</span>';
+        var el = document.createElement('div');
+        el.textContent = str;
+        return el.innerHTML;
+      }
+
+      function linkOrText(url) {
+        if (!url) return '<span style="opacity:0.3">Tidak diisi</span>';
+        try {
+          new URL(url);
+          return '<a href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + esc(url) + '</a>';
+        } catch (_) {
+          return esc(url);
+        }
+      }
+
+      function renderCertificate(data, idNum) {
+        var date = data.submittedAt ? new Date(data.submittedAt) : new Date();
+        var dateStr = date.toLocaleDateString('ms-MY', {
+          day: 'numeric', month: 'long', year: 'numeric'
+        });
+        var timeStr = date.toLocaleTimeString('ms-MY', {
+          hour: '2-digit', minute: '2-digit'
+        });
+
+        var certId = idNum || 'VCA-' +
+          String(date.getFullYear()).slice(-2) +
+          String(date.getMonth() + 1).padStart(2, '0') +
+          String(date.getDate()).padStart(2, '0') + '-' +
+          Math.random().toString(36).substring(2, 7).toUpperCase();
+
+        document.getElementById('certName').textContent = data.fullName;
+        document.getElementById('certCourse').textContent = data.course;
+        document.getElementById('certEmail').textContent = data.email;
+        document.getElementById('certPhone').textContent = data.phone;
+        document.getElementById('certExperience').textContent = data.experience;
+        document.getElementById('certAddress').innerHTML = data.address
+          ? esc(data.address) : '<span style="opacity:0.3">Tidak diisi</span>';
+        document.getElementById('certGithub').innerHTML = linkOrText(data.github);
+        document.getElementById('certSocial').innerHTML = linkOrText(data.social);
+        document.getElementById('certPortfolio').innerHTML = linkOrText(data.portfolio);
+        document.getElementById('certLinkedin').innerHTML = linkOrText(data.linkedin);
+        document.getElementById('certMotivation').textContent = data.motivation;
+        document.getElementById('certReferral').textContent = data.referral;
+        document.getElementById('certDate').textContent = 'Didaftarkan pada: ' + dateStr + ' | ' + timeStr;
+        document.getElementById('certId').textContent = 'No. Lesen: ' + certId;
+      }
+
+      // ================================================================
+      // TUKAR URL INI selepas deploy Google Apps Script Web App
+      // ================================================================
+      var GAS_URL = 'https://script.google.com/macros/s/AKfycbwMb0K1VeqzVzHuH0toV9CtcPrCyK3wS3lVRKnbnxAOsXZfQ3PLYjqyQ4YPmkghQP-7/exec';
+
+      // ================================================================
+
+      function getFromApi(url) {
+        return fetch(url).then(function (res) { return res.json(); });
+      }
+
+      /** Simpan data pelajar ke localStorage + cache timestamp */
+      function cacheStudentData(student, id) {
+        var cache = {
+          student: student,
+          id: id || student.id,
+          cachedAt: new Date().toISOString()
+        };
+        localStorage.setItem('vca_student_cache', JSON.stringify(cache));
+      }
+
+      /** Cuba ambil dari cache dulu, return null jika tiada */
+      function getFromCache(studentId) {
+        try {
+          var raw = localStorage.getItem('vca_student_cache');
+          if (!raw) return null;
+          var cache = JSON.parse(raw);
+          if (cache.id === studentId && cache.student) {
+            return cache.student;
+          }
+          return null;
+        } catch (_) {
+          return null;
+        }
+      }
+
+      function fallbackToLocalStorage() {
+        var dataStr = localStorage.getItem('vca_application');
+        if (dataStr) {
+          renderCertificate(JSON.parse(dataStr));
+        } else {
+          showNoData();
+        }
+      }
+
+      var params = new URLSearchParams(window.location.search);
+      var studentId = params.get('id');
+
+      if (!studentId) {
+        fallbackToLocalStorage();
+        return;
+      }
+
+      // Cuba cache dulu
+      var cached = getFromCache(studentId);
+      if (cached) {
+        renderCertificate(cached, studentId);
+        // Jangan return — cuba refresh dari server di background
+      }
+
+      // Try GAS first
+      if (GAS_URL) {
+        getFromApi(GAS_URL + '?id=' + encodeURIComponent(studentId))
+          .then(function (result) {
+            if (result.success && result.student) {
+              cacheStudentData(result.student, studentId);
+              renderCertificate(result.student, studentId);
+            } else if (!cached) {
+              fallbackToLocalStorage();
+            }
+          })
+          .catch(function () {
+            if (!cached) fallbackToLocalStorage();
+          });
+      } else {
+        // Try local Node.js server
+        var localUrl = window.location.origin + '/api/students/' + encodeURIComponent(studentId);
+        getFromApi(localUrl)
+          .then(function (result) {
+            if (result.success && result.student) {
+              cacheStudentData(result.student, studentId);
+              renderCertificate(result.student, studentId);
+            } else if (!cached) {
+              fallbackToLocalStorage();
+            }
+          })
+          .catch(function () {
+            if (!cached) fallbackToLocalStorage();
+          });
+      }
+    })();
+  </script>
+</body>
+</html>
