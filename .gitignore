@@ -1,0 +1,19 @@
+# Google Apps Script — SHEET_ID敏感, upload manual ke script.google.com
+gas/
+
+# Data pelajar — jangan push ke repo (privasi)
+data/students.json
+
+# Node.js
+node_modules/
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
